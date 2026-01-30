@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 		String nm = customer.getName().trim();
 	    for (int i = 0; i < nm.length(); i++) {
 	        if (!Character.isLetter(nm.charAt(i))) {
-	            throw new InvalidCustomerName("Name should contain characters only");
+	            throw new InvalidCustomerName("Name should contain characters only..");
 	        }
 	    }
 
