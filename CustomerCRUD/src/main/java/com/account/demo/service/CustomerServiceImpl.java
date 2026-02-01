@@ -4,6 +4,8 @@ package com.account.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.account.demo.exception.IdNotFoundException;
@@ -22,12 +24,15 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	public void validCustomer(Customer customer) {
 		
+	
 		String nm = customer.getName().trim();
-	    for (int i = 0; i < nm.length(); i++) {
-	        if (!Character.isLetter(nm.charAt(i))) {
-	            throw new InvalidCustomerName("Name should contain characters only..");
-	        }
-	    }
+
+		for (int i = 0; i < nm.length(); i++) {
+		    if (Character.isDigit(nm.charAt(i))) {
+		        throw new InvalidCustomerName("Digits are not allowed in name" );
+		    }
+		}
+
 
 	    
 	    String mob = customer.getMob().trim();
@@ -66,9 +71,16 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> display() {
+	public ResponseEntity<List<Customer>> display() {
 		// TODO Auto-generated method stub
-		return customerRepository.findAll();
+		
+		List<Customer> customers = customerRepository.findAll();
+		
+		if(customers.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(customers, HttpStatus.OK);
+
 	}
 
 	@Override

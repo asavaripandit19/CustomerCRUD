@@ -3,6 +3,7 @@ package com.account.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.account.demo.model.Customer;
@@ -33,7 +34,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("display")
-	public List<Customer> display() {
+	public ResponseEntity<List<Customer>> display() {
 		return customerService.display();
 	}
 	
