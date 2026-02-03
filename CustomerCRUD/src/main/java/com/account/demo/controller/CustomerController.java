@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.account.demo.model.Customer;
 import com.account.demo.service.CustomerService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +45,12 @@ public class CustomerController {
 	public Customer delete(@PathVariable Integer id) {
 		return customerService.delete(id);
 	}
+	
+	@PutMapping("/update/{id}")
+    public void updateCustomer(@PathVariable Integer id, @RequestBody Customer customer) {
+        customerService.udpdate(customer, id);
+    }
+
 	
 	
 	@GetMapping("search/{id}")
