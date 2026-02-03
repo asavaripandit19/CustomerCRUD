@@ -23,25 +23,35 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	
 	public void validCustomer(Customer customer) {
-		
-	
-		String nm = customer.getName().trim();
 
-		for (int i = 0; i < nm.length(); i++) {
-		    if (Character.isDigit(nm.charAt(i))) {
-		        throw new InvalidCustomerName("Digits are not allowed in name" );
-		    }
-		}
+	    if (customer == null) {
+	        throw new InvalidCustomerName("Customer data is missing");
+	    }
 
+	    if (customer.getName() == null || customer.getName().trim().isEmpty()) {
+	        throw new InvalidCustomerName("Name cannot be empty");
+	    }
 
-	    
+	    if (customer.getMob() == null || customer.getMob().trim().isEmpty()) {
+	        throw new InvalidMobileNumber("Mobile number cannot be empty");
+	    }
+
+	    String nm = customer.getName().trim();
 	    String mob = customer.getMob().trim();
 
+	    // Name validation
+	    for (int i = 0; i < nm.length(); i++) {
+	        if (Character.isDigit(nm.charAt(i))) {
+	            throw new InvalidCustomerName("Digits are not allowed in name");
+	        }
+	    }
+
+	    // Mobile validation
 	    if (mob.length() != 13) {
 	        throw new InvalidMobileNumber("Mobile number must be 13 characters");
 	    }
 
-	    if (!(mob.startsWith("+91"))) {
+	    if (!mob.startsWith("+91")) {
 	        throw new InvalidMobileNumber("Mobile number must start with +91");
 	    }
 
@@ -51,16 +61,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 	    for (int i = 3; i < mob.length(); i++) {
 	        if (!Character.isDigit(mob.charAt(i))) {
-	            throw new InvalidMobileNumber("Only digits are allowed after +91");
+	            throw new InvalidMobileNumber("Only digits allowed after +91");
 	        }
 	    }
 
-	    
 	    if (customerRepository.existsByMob(mob)) {
 	        throw new InvalidMobileNumber("Duplicate Mobile Number is not Allowed");
 	    }
-	
 	}
+
 
 	@Override
 	public void add(Customer customer) {
