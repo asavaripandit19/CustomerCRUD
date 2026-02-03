@@ -46,12 +46,12 @@ public class CustomerController {
 	}
 	
 	
-	@PostMapping("search/{id}")
+	@GetMapping("search/{id}")
 	public Customer search(@PathVariable Integer id) {
 		return customerService.search(id);
 	}
 	
-	@PostMapping("searchByMob/{mob}")
+	@GetMapping("searchByMob/{mob}")
 	public Customer searchMob(@PathVariable String mob) {
 		//TODO: process POST request
 		

@@ -139,7 +139,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer findMob(String mob) {
-		return customerRepository.findByMob(mob);
+	    Customer customer = customerRepository.findByMob(mob);
+	    if(customer == null) {
+	        throw new InvalidMobileNumber("Mobile number not found");
+	    }
+	    return customer;
 	}
 
 }
